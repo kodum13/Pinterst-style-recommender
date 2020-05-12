@@ -1,0 +1,69 @@
+from py3pin.Pinterest import Pinterest
+import requests
+import joblib
+
+download_dir = './images/recs/'
+
+pinterest = Pinterest(email='your_username@gmail.com',
+                      password='your_password',
+                      username='your_username',
+                      cred_root='cred_root')
+
+pinterest.login()
+boards = pinterest.boards()
+
+target_board = boards[3]
+rec_board = boards[16]
+
+# get all pins for the board
+board_pins = []
+pin_batch = pinterest.board_feed(board_id=target_board['id'])
+board_id = target_board['id']
+rec_id = rec_board['id']
+
+
+def get_board_pin_recommendations(board_id='', max_items=10):
+    rec_pins = []
+    rec_batch = pinterest.board_recommendations(board_id=board_id)
+    while len(rec_batch) > 0 and len(rec_pins) < max_items:
+        rec_pins += rec_batch
+    return rec_pins
+
+# Get the recommended pins from Pinterest to analyze
+recs = get_board_pin_recommendations(board_id, max_items=1)
+print(recs)
+
+
+def pin_to_board(board_id='',
+        section_id=None,
+        image_url='https://i.pinimg.com/170x/32/78/bd/3278bd27073e1ec9c8a708409279768b.jpg',
+        description='this is auto pin',
+        title='a bot did this',
+        link='https://www.google.com/'):
+    return pinterest.pin(board_id=board_id, section_id=section_id, image_url=image_url, description=description,
+                         title=title, link=link)
+
+
+# this can download images by url
+def download_image(url, path):
+    r = requests.get(url=url, stream=True)
+    if r.status_code == 200:
+        with open(path, 'wb') as f:
+            for chunk in r.iter_content(1024):
+                f.write(chunk)
+
+rec_dict = {}
+# For each recommendation, download the pin as image and save it to the recs file for scoring
+for i in range(len(recs)):
+    pin = recs[i]
+    print(pin)
+    url = pin['images']['orig']['url']
+    indx = str(url).rfind('.')
+    extension = str(url)[indx:]
+    rec_dict[pin['id']] = url
+    download_image(url, download_dir + pin['id'] + extension)
+
+
+# Save the dictionary so after a pin is recommended it can be added to a board
+# Need to find the url from the pin id
+joblib.dump(rec_dict, "rec_dict.dat")
