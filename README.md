@@ -2,7 +2,7 @@
 
 This model uses Pinterest boards as input for a neural network model in Keras and recommends new styles for me.
 
-To interact with Pinterest, I use the py3-pinterest library from pypi.org/project/py3-pinterest/.
+To interact with Pinterest, I use the py3-pinterest library from https://pypi.org/project/py3-pinterest/.
 The VGG16 convolutional neural network model is implemented with the help of Keras to create probabilities that I will like the style. 
 https://www.tensorflow.org/api_docs/python/tf/keras/applications/VGG16
 
