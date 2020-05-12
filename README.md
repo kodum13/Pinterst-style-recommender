@@ -14,4 +14,4 @@ Steps to create this project:
 6. Add those recommended pins to a new board.
 7. Enjoy styles on Pinterest without having to constantly pin new styles!
 
-![pinterest style]((https://github.com/kodum13/pinterest-style-recommender/blob/master/pinterst style.png)
+![pinterest style]((https://github.com/kodum13/pinterest-style-recommender/blob/master/pinterst_style.png)
