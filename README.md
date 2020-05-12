@@ -10,4 +10,4 @@ Steps to create this project:
 6. Add those recommended pins to a new board.
 7. Enjoy styles on Pinterest without having to constantly pin new styles!
 
-![pinterest style](C:\Users\kodum\OneDrive\Pictures\pinterst style.png)
+![pinterest style](Pinterest-style-recommender/pinterst style.png)
